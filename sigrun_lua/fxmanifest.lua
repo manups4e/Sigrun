@@ -6,7 +6,7 @@ version '1.0.0'
 
 --[[
     The script and its components were created by manups4e.
-    Copying, modification, or distribution without permission is prohibited.
+    Copying, modification, or distribution for commercial use is prohibited.
     All rights reserved.
     © 2026 manups4e
 ]]--
