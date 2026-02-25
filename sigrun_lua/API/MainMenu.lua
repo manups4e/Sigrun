@@ -189,6 +189,12 @@ function MainMenu:ProcessControl()
         return
     end
 
+    if self._mouseEnabled then
+        HideHudComponentThisFrame(19)
+        HideHudComponentThisFrame(20)
+    end
+
+
     -- Tab Switching (LB/RB or Keyboard equivalent)
     if CheckInput(FRONTEND_INPUT.FRONTEND_INPUT_LB, false, 0, false) then --[[ or (IsDisabledControlJustPressed(2, 192) and IsControlPressed(2, 21) and IsUsingKeyboard(2))]]
         if #self.Tabs > 1 and not self:CurrentTab().hideTabs then
