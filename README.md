@@ -38,25 +38,6 @@
 
 ---
 
-## 💻 Usage Example (Quick Start)
-
-```lua
--- Quick example to create a simple menu
-local menu = exports.sigrun:CreateMenu("MY MENU", "Example Subtitle")
-
-menu:AddButton("Option 1", "Option description", function()
-    print("You clicked option 1!")
-end)
-
-menu:AddCheckbox("Enable Feature", false, function(checked)
-    print("Feature enabled: " .. tostring(checked))
-end)
-
-menu:Open()
-```
-
----
-
 ## 📺 Showcase Video
 See the interface in action:
 [Link to your Showcase Video]
@@ -66,8 +47,6 @@ See the interface in action:
 ## 🏗️ Roadmap
 - [x] Stable Lua Version
 - [ ] C# Version (WIP)
-- [ ] Support for external custom icons
-- [ ] Color preset export
 
 ---
 
