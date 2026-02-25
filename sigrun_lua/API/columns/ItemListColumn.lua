@@ -33,6 +33,7 @@ function ItemListColumn.New(label, _maxItems)
     base.mWidth = 300
     base.OnIndexChanged = function(index) end
     base.OnItemSelect = function(index) end
+    base.OnListChange = function(column, item, index) end
     return setmetatable(base, ItemListColumn)
 end
 
@@ -550,22 +551,23 @@ end
 ---Navigates left for list or slider items.
 function ItemListColumn:GoLeft()
     if not self:visible() or #self.Items == 0 then return end
-    if not self:CurrentItem():Enabled() then
+    local curItem = self:CurrentItem()
+    if not curItem:Enabled() then
         PlaySoundFrontend(-1, "ERROR", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
         return
     end
 
-    if self:CurrentItem().ItemId == 1 then
-        if self:CurrentItem() == "MenuListItem" then
-            self:CurrentItem():Index(self:CurrentItem():Index() - 1)
-            self.OnListChange(self, self:CurrentItem(), self:CurrentItem()._Index)
-            self:CurrentItem().OnListChanged(self, self:CurrentItem(), self:CurrentItem()._Index)
+    if curItem.ItemId == 1 then
+        if curItem() == "MenuListItem" then
+            curItem:Index(curItem:Index() - 1)
+            self.OnListChange(self, curItem, curItem._Index)
+            curItem.OnListChanged(self, curItem, curItem._Index)
         else
-            local result = tostring(self:CurrentItem().Callback(self:CurrentItem(), "left"))
-            self:CurrentItem():CurrentListItem(result)
+            local result = tostring(curItem.Callback(curItem, "left"))
+            curItem:CurrentListItem(result)
         end
-    elseif self:CurrentItem().ItemId == 3 or self:CurrentItem().ItemId == 4 or self:CurrentItem().ItemId == 5 then
-        self:CurrentItem():Index(self:CurrentItem():Index() - 1)
+    elseif curItem.ItemId == 3 or curItem.ItemId == 4 or curItem.ItemId == 5 then
+        curItem:Index(curItem:Index() - curItem._Multiplier)
     end
     self:UpdateDescription()
 end
@@ -573,21 +575,22 @@ end
 ---Navigates right for list or slider items.
 function ItemListColumn:GoRight()
     if not self:visible() or #self.Items == 0 then return end
-    if not self:CurrentItem():Enabled() then
+    local curItem = self:CurrentItem()
+    if not curItem:Enabled() then
         PlaySoundFrontend(-1, "ERROR", "HUD_FRONTEND_DEFAULT_SOUNDSET", false)
         return
     end
-    if self:CurrentItem().ItemId == 1 then
-        if self:CurrentItem() == "MenuListItem" then
-            self:CurrentItem():Index(self:CurrentItem():Index() + 1)
-            self.OnListChange(self, self:CurrentItem(), self:CurrentItem()._Index)
-            self:CurrentItem().OnListChanged(self, self:CurrentItem(), self:CurrentItem()._Index)
+    if curItem.ItemId == 1 then
+        if curItem() == "MenuListItem" then
+            curItem:Index(curItem:Index() + 1)
+            self.OnListChange(self, curItem, curItem._Index)
+            curItem.OnListChanged(self, curItem, curItem._Index)
         else
-            local result = tostring(self:CurrentItem().Callback(self:CurrentItem(), "right"))
-            self:CurrentItem():CurrentListItem(result)
+            local result = tostring(curItem.Callback(curItem, "right"))
+            curItem:CurrentListItem(result)
         end
-    elseif self:CurrentItem().ItemId == 3 or self:CurrentItem().ItemId == 4 or self:CurrentItem().ItemId == 5 then
-        self:CurrentItem():Index(self:CurrentItem():Index() + 1)
+    elseif curItem.ItemId == 3 or curItem.ItemId == 4 or curItem.ItemId == 5 then
+        curItem:Index(curItem:Index() +  curItem._Multiplier)
     end
     self:UpdateDescription()
 end
