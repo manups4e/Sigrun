@@ -38,11 +38,6 @@
 
 ---
 
-## 📺 Showcase Video
-See the interface in action:
-[Link to your Showcase Video]
-
----
 
 ## 🏗️ Roadmap
 - [x] Stable Lua Version
