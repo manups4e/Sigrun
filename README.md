@@ -1,6 +1,6 @@
 # Sigrun API 🎮
 
-![Sigrun Banner](https://your-image-link.com/banner.png)
+![Sigrun Banner|690x394, 75%](https://github.com/user-attachments/assets/dda2c0a0-099a-47d6-9131-91114b46ace8)
 
 **Sigrun API** is a standalone library for FiveM that faithfully recreates the new **Rockstar Mission Creator** interface using the power of **Scaleform** movies. Designed to be lightweight, elegant, and high-performing, it allows developers to integrate "Native-style" menus with zero effort and maximum customization.
 
@@ -18,7 +18,7 @@
 * **Highly Customizable:** Supports custom colors, separators, and advanced labels.
 * **Tab System:** Multiple menus sections divided on the same menu with mooth navigation between different categories using customizable icons.
 * **Standalone:** No specific framework dependencies (works on ESX, QB, or custom).
-* **Exports compatibility**: The API allows you to export the entire building system to any other resource by simply calling `exports.sigrun:GetAPI()` export.
+* **Exports compatibility**: The API allows you to export the entire building system to any other resource by simply calling `exports.sigrun:GetAPI()` export. (WIP)
 
 ---
 
