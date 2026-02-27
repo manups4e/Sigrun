@@ -467,12 +467,14 @@ function ItemListColumn:MouseScroll(dir)
     if self.index < visibleStart then
         targetIndex = visibleStart
         while targetIndex <= visibleEnd and self.Items[targetIndex] and self.Items[targetIndex].ItemId == 6 and self.Items[targetIndex].Jumpable do
+            Wait(0)
             targetIndex = targetIndex + 1
         end
         if targetIndex > visibleEnd then targetIndex = visibleStart end
     elseif self.index > visibleEnd then
         targetIndex = visibleEnd
         while targetIndex >= visibleStart and self.Items[targetIndex] and self.Items[targetIndex].ItemId == 6 and self.Items[targetIndex].Jumpable do
+            Wait(0)
             targetIndex = targetIndex - 1
         end
         if targetIndex < visibleStart then targetIndex = visibleEnd end
