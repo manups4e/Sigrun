@@ -3,3 +3,7 @@
 ################################################################################
 
 /sigrun_csharp/.vs
+/sigrun_csharp/MenuExample/obj
+/sigrun_csharp/SigrunClient/obj
+/sigrun_csharp/CompiledLibs/Debug/MenuExample.net.dll
+/sigrun_csharp/CompiledLibs/Debug/Sigrun.dll
