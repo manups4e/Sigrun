@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="MenuExample/MenuExample.csproj" Id="8d0212a3-d4cd-4efb-9da7-7b42310bc9c3">
+    <BuildDependency Project="SigrunClient/SigrunClient.csproj" />
+  </Project>
+  <Project Path="SigrunClient/SigrunClient.csproj" />
+</Solution>
