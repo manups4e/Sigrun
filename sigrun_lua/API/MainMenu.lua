@@ -29,6 +29,9 @@ function MainMenu.New()
         _maxExtensionPixels = 450,
         index = 1,
         TemporarilyHidden = false,
+        IsHovered = false,
+        scrollOnHover = false,
+
         OnTabChange = function(tab, newindex, oldTab, oldIndex) end,
         OnMenuOpen = function(menu) end,
         OnMenuClose = function(menu) end
@@ -41,6 +44,14 @@ end
 function MainMenu:MouseEnabled(bool)
     if bool == nil then return self._mouseEnabled end
     self._mouseEnabled = bool
+    if self:Visible() then
+        SH.scaleform:CallFunction("INIT_MOUSE_EVENTS", self._mouseEnabled)
+    end
+end
+
+function MainMenu:ScrollOnlyOnMenuHover(enable)
+    if enable == nil then return self.scrollOnHover end
+    self.scrollOnHover = enable
 end
 
 ---Sets or gets the menu visibility.
@@ -61,6 +72,7 @@ function MainMenu:Visible(visible)
                     SH.scaleform = Scaleform.RequestWidescreen("sigrun")
                     while not SH.scaleform:IsLoaded() do Wait(0) end
                 end
+                SH.scaleform:CallFunction("INIT_MOUSE_EVENTS", self._mouseEnabled);
 
                 -- Setup Tabs
                 SH.scaleform:CallFunction("SET_TABS_SLOT_EMPTY", 0)
@@ -183,17 +195,18 @@ function MainMenu:GoBack()
     self:Visible(false)
 end
 
+function MainMenu:Draw()
+    SH.scaleform:Render2D()
+    Citizen.CreateThread(function()
+        self.IsHovered = SH.scaleform:CallFunctionAsyncReturnBool("IS_MOUSE_ON_MENU")
+    end)
+end
+
 ---Main logic loop for keyboard/controller navigation.
 function MainMenu:ProcessControl()
     if not self:Visible() or self.TemporarilyHidden or self._isBuilding then
         return
     end
-
-    if self._mouseEnabled then
-        HideHudComponentThisFrame(19)
-        HideHudComponentThisFrame(20)
-    end
-
 
     -- Tab Switching (LB/RB or Keyboard equivalent)
     if CheckInput(FRONTEND_INPUT.FRONTEND_INPUT_LB, false, 0, false) then --[[ or (IsDisabledControlJustPressed(2, 192) and IsControlPressed(2, 21) and IsUsingKeyboard(2))]]
@@ -233,6 +246,13 @@ function MainMenu:ProcessMouse()
     SetInputExclusive(2, 240)
     SetInputExclusive(2, 238)
     SetInputExclusive(2, 237)
+
+    if self._mouseEnabled and (not self.scrollOnHover or self.IsHovered) then
+        SetInputExclusive(2, 241)
+        SetInputExclusive(2, 242)
+        HideHudComponentThisFrame(19)
+        HideHudComponentThisFrame(20)
+    end
 
     if SH.scaleform == nil or not SH.scaleform:IsLoaded() then return end
 

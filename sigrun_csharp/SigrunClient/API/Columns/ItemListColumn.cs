@@ -534,20 +534,6 @@ namespace SigrunClient.API.Columns
 			{
 				if (dir == 1) GoDown();
 				else GoUp();
-
-				if (_currentlyHighlighted != -1)
-				{
-					PreviewDescription(_currentlyHighlighted);
-					int relativeDescIdx = _currentlyHighlighted - _topEdge;
-					SendDescriptionCommand(relativeDescIdx);
-				}
-				else
-				{
-					int relativeSelectionIdx = index - _topEdge;
-					UpdateDescription();
-					SendDescriptionCommand(relativeSelectionIdx);
-				}
-
 				return;
 			}
 

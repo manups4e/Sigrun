@@ -33,7 +33,6 @@ namespace SigrunClient.API.Tabs
         public string Title { get; set; }
         public bool Active { get; set; }
 
-        public bool ScrollNewStyle { get; set; }
         public MainMenu Parent { get; internal set; }
         public int CurrentColumnIndex { get; internal set; }
         internal bool showArrow;

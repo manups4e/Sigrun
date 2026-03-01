@@ -127,6 +127,12 @@ end
 
 ---Main input loop for handling tab-specific controls.
 function ItemListTab:HandleInput()
+    
+    local scrollWheelFlags = CHECK_INPUT_OVERRIDE_FLAG.CHECK_INPUT_OVERRIDE_FLAG_IGNORE_MOUSE_WHEEL
+    if self.Parent._mouseEnabled and (not self.Parent.scrollOnHover or self.Parent.IsHovered) then
+        scrollWheelFlags = CHECK_INPUT_OVERRIDE_FLAG.CHECK_INPUT_OVERRIDE_FLAG_NONE
+    end
+
     if CheckInput(FRONTEND_INPUT.FRONTEND_INPUT_UP, true, CHECK_INPUT_OVERRIDE_FLAG.CHECK_INPUT_OVERRIDE_FLAG_IGNORE_ANALOGUE_STICKS, false) then
         self:GoUp()
     elseif CheckInput(FRONTEND_INPUT.FRONTEND_INPUT_DOWN, true, CHECK_INPUT_OVERRIDE_FLAG.CHECK_INPUT_OVERRIDE_FLAG_IGNORE_ANALOGUE_STICKS, false) then
@@ -137,9 +143,9 @@ function ItemListTab:HandleInput()
         self:GoRight()
     elseif CheckInput(FRONTEND_INPUT.FRONTEND_INPUT_ACCEPT, true, 0, false) then
         self:Select()
-    elseif CheckInput(FRONTEND_INPUT.FRONTEND_INPUT_CURSOR_SCROLL_UP, true, 0, false) then
+    elseif CheckInput(FRONTEND_INPUT.FRONTEND_INPUT_CURSOR_SCROLL_UP, true, scrollWheelFlags, false) then
         self:MouseScroll(-1)
-    elseif CheckInput(FRONTEND_INPUT.FRONTEND_INPUT_CURSOR_SCROLL_DOWN, true, 0, false) then
+    elseif CheckInput(FRONTEND_INPUT.FRONTEND_INPUT_CURSOR_SCROLL_DOWN, true, scrollWheelFlags, false) then
         self:MouseScroll(1)
     end
 end

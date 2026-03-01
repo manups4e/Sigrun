@@ -255,6 +255,8 @@ namespace SigrunClient.API
 
 			if (_mouseAllowed && (!ScrollOnlyOnMenuHover || IsHovered))
 			{
+				SetInputExclusive(2, 241);
+				SetInputExclusive(2, 242);
 				HideHudComponentThisFrame(19);
 				HideHudComponentThisFrame(20);
 			}

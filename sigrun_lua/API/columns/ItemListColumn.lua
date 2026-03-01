@@ -31,6 +31,7 @@ function ItemListColumn.New(label, _maxItems)
     base._topEdge = 1
     base._currentlyHighlighted = 0
     base.mWidth = 300
+    base.ScrollNewStyle = true
     base.OnIndexChanged = function(index) end
     base.OnItemSelect = function(index) end
     base.OnListChange = function(column, item, index) end
@@ -394,12 +395,18 @@ function ItemListColumn:GoUp()
     local isScrollVisible = #self.Items >= self.VisibleItems
     self:SetColumnScroll(isScrollVisible, self._topEdge)
 
-    self:UpdateDescription()
     self:CurrentItem():Selected(true)
     self.OnIndexChanged(self:CurrentSelection())
 
     SH.scaleform:CallFunction("SET_COLUMN_HIGHLIGHT", self.position, self.index - 1)
-    self:SendDescriptionCommand(self.index - self._topEdge)
+    if self._currentlyHighlighted ~= 0 then
+        self:PreviewDescription(self._currentlyHighlighted);
+        local relativeDescIdx = self._currentlyHighlighted - self._topEdge;
+        self:SendDescriptionCommand(relativeDescIdx);
+    else
+        self:UpdateDescription()
+        self:SendDescriptionCommand(self.index - self._topEdge)
+    end
 end
 
 ---Moves the selection downward.
@@ -429,18 +436,33 @@ function ItemListColumn:GoDown()
     local isScrollVisible = #self.Items >= self.VisibleItems
     self:SetColumnScroll(isScrollVisible, self._topEdge)
 
-    self:UpdateDescription()
     self:CurrentItem():Selected(true)
     self.OnIndexChanged(self:CurrentSelection())
 
     SH.scaleform:CallFunction("SET_COLUMN_HIGHLIGHT", self.position, self.index - 1)
-    self:SendDescriptionCommand(self.index - self._topEdge)
+    if self._currentlyHighlighted ~= 0 then
+        self:PreviewDescription(self._currentlyHighlighted);
+        local relativeDescIdx = self._currentlyHighlighted - self._topEdge;
+        self:SendDescriptionCommand(relativeDescIdx);
+    else
+        self:UpdateDescription()
+        self:SendDescriptionCommand(self.index - self._topEdge)
+    end
 end
 
 ---Handles mouse wheel scrolling.
 ---@param dir number Scroll direction
 function ItemListColumn:MouseScroll(dir)
     if not self:visible() or #self.Items == 0 then return end
+
+    if not self.ScrollNewStyle then
+        if (dir == 1) then
+            self:GoDown()
+        else
+            self:GoUp();
+        end
+        return;
+    end
 
     local numItems = #self.Items
     local maxVisible = self.VisibleItems
@@ -487,13 +509,13 @@ function ItemListColumn:MouseScroll(dir)
         indexChanged = true
     end
 
-    self:SetColumnScroll(#self.Items >= self.VisibleItems, self._topEdge)
     SH.scaleform:CallFunction("SET_INPUT_EVENT", self.position, dir)
 
     if indexChanged then
         SH.scaleform:CallFunction("SET_COLUMN_HIGHLIGHT", self.position, self.index - 1)
         self.OnIndexChanged(self.index)
     end
+    self:SetColumnScroll(#self.Items >= self.VisibleItems, self._topEdge)
 
     if self._currentlyHighlighted ~= 0 then
         local predictedHoverIndex = self._currentlyHighlighted + actualDelta
@@ -592,7 +614,7 @@ function ItemListColumn:GoRight()
             curItem:CurrentListItem(result)
         end
     elseif curItem.ItemId == 3 or curItem.ItemId == 4 or curItem.ItemId == 5 then
-        curItem:Index(curItem:Index() +  curItem._Multiplier)
+        curItem:Index(curItem:Index() + curItem._Multiplier)
     end
     self:UpdateDescription()
 end

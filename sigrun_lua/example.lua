@@ -25,7 +25,13 @@ function BuildMenu()
         return
     end
     mainMenu = MainMenu.New()
-
+    
+    -- true by default, set it to false to remove all mouse related features.
+    mainMenu:MouseEnabled(true) 
+    
+    -- set this to true to allow scroll only when mouse hovering on the menu.
+    mainMenu:ScrollOnlyOnMenuHover(true)
+    
     for i = 1, 5 do -- you can add as many tabs as you want.. and they will automatically scroll on Q, E / Lb, Rb press.
         local tabTitle = "Tab #" .. i
         local tabColor = SColor.FromRandomValues()
@@ -47,6 +53,10 @@ function BuildMenu()
     -- TAB 1: SHOWCASE ITEMS
     -------------------------------------------------------
     local firstTab = mainMenu.Tabs[1]
+    
+    -- ⚠️ set this to true for the new R* scrolling style.
+    firstTab.LeftColumn.ScrollNewStyle = false
+
     firstTab:UpdateTitle("SHOWCASE", false, false)
 
     -- Standard MenuItem with SubColumn

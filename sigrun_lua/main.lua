@@ -21,7 +21,7 @@ Citizen.CreateThread(function()
     while true do
         Wait(0)
         if SH.instance and SH.instance:Visible() then
-            SH.scaleform:Render2D()
+            SH.instance:Draw()
         end
     end
 end)
@@ -32,16 +32,7 @@ Citizen.CreateThread(function()
         Wait(0)
         if SH.instance and SH.instance:Visible() then
             if SH.instance._mouseEnabled and IsUsingKeyboard(2) then
-                if not allowMouse then
-                    allowMouse = true
-                    SH.scaleform:CallFunction("INIT_MOUSE_EVENTS", allowMouse)
-                end
                 SH.instance:ProcessMouse()
-            else
-                if allowMouse then
-                    allowMouse = false
-                    SH.scaleform:CallFunction("INIT_MOUSE_EVENTS", allowMouse)
-                end
             end
             SH.instance:ProcessControl()
         end

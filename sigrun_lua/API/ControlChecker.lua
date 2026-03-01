@@ -46,6 +46,9 @@ function CheckInput(input, bPlaySound, OverrideFlags, bCheckForButtonJustPressed
 
     local ignoreDpad = (OverrideFlags & CHECK_INPUT_OVERRIDE_FLAG.CHECK_INPUT_OVERRIDE_FLAG_IGNORE_D_PAD) ~= 0
     local ignoreSticks = (OverrideFlags & CHECK_INPUT_OVERRIDE_FLAG.CHECK_INPUT_OVERRIDE_FLAG_IGNORE_ANALOGUE_STICKS) ~= 0
+    local ignoreMouseWheel = (OverrideFlags & CHECK_INPUT_OVERRIDE_FLAG.CHECK_INPUT_OVERRIDE_FLAG_IGNORE_MOUSE_WHEEL) ~= 0
+    
+
 
     -- Fetch Stick Data
     if not ignoreSticks then
@@ -171,9 +174,9 @@ function CheckInput(input, bPlaySound, OverrideFlags, bCheckForButtonJustPressed
 
     -- MOUSE SCROLL
     elseif input == FRONTEND_INPUT.FRONTEND_INPUT_CURSOR_SCROLL_UP then
-        bInputTriggered = IsDisabledControlPressed(2, 241)
+        bInputTriggered = IsDisabledControlPressed(2, 241) and not ignoreMouseWheel
     elseif input == FRONTEND_INPUT.FRONTEND_INPUT_CURSOR_SCROLL_DOWN then
-        bInputTriggered = IsDisabledControlPressed(2, 242)
+        bInputTriggered = IsDisabledControlPressed(2, 242) and not ignoreMouseWheel
 
     -- GENERIC BUTTONS
     elseif input == FRONTEND_INPUT.FRONTEND_INPUT_X then

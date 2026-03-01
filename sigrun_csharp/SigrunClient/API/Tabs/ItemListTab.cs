@@ -18,7 +18,6 @@ namespace SigrunClient.API.Tabs
 			_identifier = "Page_Items";
 			LeftColumn = new ItemListColumn();
 			RightColumn = new DescriptionListColumn();
-			LeftColumn.ScrollNewStyle = ScrollNewStyle;
 			LeftColumn.Parent = this;
 			RightColumn.Parent = this;
 		}
