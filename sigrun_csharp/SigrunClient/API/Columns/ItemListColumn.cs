@@ -85,6 +85,13 @@ namespace SigrunClient.API.Columns
 			UpdateDescription();
 		}
 
+		private float GetStringWidth(string label)
+		{
+			SetTextFont(0); // set the default font to $Font2 or Chalet-London (classic)
+			SetTextScale(0.0f, 0.35f); // FIX this makes the text the right size for the screen.
+			BeginTextCommandGetWidth(label);
+			return EndTextCommandGetWidth(true) * 1280; // we want it in scaleform size.
+		}
 		public override void ShowColumn(bool show = true)
 		{
 			if (!visible) return;
@@ -121,15 +128,14 @@ namespace SigrunClient.API.Columns
 			if (visible)
 				SendItemToScaleform(index);
 
-			float lwidth = ScreenTools.GetTextWidth("SIGRUN_ITMLST_LBL");
-			float rwidth = ScreenTools.GetTextWidth("SIGRUN_ITMLST_RLBL");
-			Debug.WriteLine($"lWidth: {lwidth}, rWidth: {rwidth}, total: {(lwidth + rwidth)}");
-			//if (lwidth + rwidth > mWidth)
-			//	mWidth = lwidth + rwidth;
-			// TODO: preso da lua... gestire
-			//if math.round(rwidth, 2) == 1.28 then
-			//    rwidth = GetStringWidth("CELL_EMAIL_BCON")
-			//end
+			float lwidth = GetStringWidth("SIGRUN_ITMLST_LBL");
+			float rwidth = GetStringWidth("SIGRUN_ITMLST_RLBL");
+			if (Math.Round(rwidth, 2) == 1.28f)
+				rwidth = GetStringWidth("SIGRUN_ITMLST_LSTITM_RLBL");
+			float totW = lwidth + rwidth;
+			Debug.WriteLine($"lwidth: {lwidth}, rwidth: {rwidth}, totW: {totW}");
+			if (totW > mWidth )
+				mWidth = totW;	
 		}
 
 		public override void UpdateSlot(int index)
@@ -137,11 +143,13 @@ namespace SigrunClient.API.Columns
 			if (index >= Items.Count) return;
 			if (visible)
 				SendItemToScaleform(index, true);
-			float lwidth = ScreenTools.GetTextWidth("SIGRUN_ITMLST_LBL");
-			float rwidth = ScreenTools.GetTextWidth("SIGRUN_ITMLST_RLBL");
-			Debug.WriteLine($"lWidth: {lwidth}, rWidth: {rwidth}, total: {(lwidth + rwidth)}");
-			//if (lwidth + rwidth > mWidth)
-			//	mWidth = lwidth + rwidth;
+			float lwidth = GetStringWidth("SIGRUN_ITMLST_LBL");
+			float rwidth = GetStringWidth("SIGRUN_ITMLST_RLBL");
+			if (Math.Round(rwidth, 2) == 1.28f)
+				rwidth = GetStringWidth("SIGRUN_ITMLST_LSTITM_RLBL");
+			float totW = lwidth + rwidth;
+			if(totW > mWidth)
+				mWidth = totW;
 		}
 
 		public override void AddSlot(int index)
@@ -149,11 +157,13 @@ namespace SigrunClient.API.Columns
 			if (index >= Items.Count) return;
 			if (visible)
 				SendItemToScaleform(index, false, false, true);
-			float lwidth = ScreenTools.GetTextWidth("SIGRUN_ITMLST_LBL");
-			float rwidth = ScreenTools.GetTextWidth("SIGRUN_ITMLST_RLBL");
-			Debug.WriteLine($"lWidth: {lwidth}, rWidth: {rwidth}, total: {(lwidth + rwidth)}");
-			//if (lwidth + rwidth > mWidth)
-			//	mWidth = lwidth + rwidth;
+			float lwidth = GetStringWidth("SIGRUN_ITMLST_LBL");
+			float rwidth = GetStringWidth("SIGRUN_ITMLST_RLBL");
+			if (Math.Round(rwidth, 2) == 1.28f)
+				rwidth = GetStringWidth("SIGRUN_ITMLST_LSTITM_RLBL");
+			float totW = lwidth + rwidth;
+			if(totW > mWidth )
+				mWidth = totW;
 		}
 
 		public void AddItemAt(MenuItem item, int idx)
@@ -165,11 +175,13 @@ namespace SigrunClient.API.Columns
 			{
 				SendItemToScaleform(idx, false, true, false);
 				item.Selected = idx == index;
-				float lwidth = ScreenTools.GetTextWidth("SIGRUN_ITMLST_LBL");
-				float rwidth = ScreenTools.GetTextWidth("SIGRUN_ITMLST_RLBL");
-				Debug.WriteLine($"lWidth: {lwidth}, rWidth: {rwidth}, total: {(lwidth + rwidth)}");
-				//if (lwidth + rwidth > mWidth)
-				//	mWidth = lwidth + rwidth;
+				float lwidth = GetStringWidth("SIGRUN_ITMLST_LBL");
+				float rwidth = GetStringWidth("SIGRUN_ITMLST_RLBL");
+				if (Math.Round(rwidth, 2) == 1.28f)
+					rwidth = GetStringWidth("SIGRUN_ITMLST_LSTITM_RLBL");
+				float totW = lwidth + rwidth;
+				if(totW > mWidth )
+					mWidth = totW;
 			}
 		}
 

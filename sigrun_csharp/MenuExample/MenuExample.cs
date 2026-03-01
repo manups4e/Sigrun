@@ -69,7 +69,7 @@ namespace MenuExample
 			subItem.SetSubColumn(submenuColumn, true, true);
 			firstTab.AddItem(subItem); // left column is the main item list column. right column is the description column.
 
-			var itemRich = new MenuItem("Advanced Item", randDescriptions[0]);
+			var itemRich = new MenuItem("This is a required field for a valid mission", randDescriptions[0]);
 			itemRich.SetRightLabel("Value: $500");
 			//Differently than ScaleformUI, Sigrun wants you to input your badge textures, this is to allow further customizations
 			//changing textures at any time and color on need.

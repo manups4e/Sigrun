@@ -150,7 +150,7 @@ function ItemListColumn:SetDataSlot(index)
     local lwidth = GetStringWidth("SIGRUN_ITMLST_LBL")
     local rwidth = GetStringWidth("SIGRUN_ITMLST_RLBL")
     if math.round(rwidth, 2) == 1.28 then
-        rwidth = GetStringWidth("CELL_EMAIL_BCON")
+        rwidth = GetStringWidth("SIGRUN_ITMLST_LSTITM_RLBL")
     end
     local width = lwidth + rwidth
     if width > self.mWidth then
@@ -178,7 +178,7 @@ function ItemListColumn:AddSlot(index)
     local lwidth = GetStringWidth("SIGRUN_ITMLST_LBL")
     local rwidth = GetStringWidth("SIGRUN_ITMLST_RLBL")
     if math.round(rwidth, 2) == 1.28 then
-        rwidth = GetStringWidth("CELL_EMAIL_BCON")
+        rwidth = GetStringWidth("SIGRUN_ITMLST_LSTITM_RLBL")
     end
     local width = lwidth + rwidth
     if width > self.mWidth then
