@@ -133,7 +133,6 @@ namespace SigrunClient.API.Columns
 			if (Math.Round(rwidth, 2) == 1.28f)
 				rwidth = GetStringWidth("SIGRUN_ITMLST_LSTITM_RLBL");
 			float totW = lwidth + rwidth;
-			Debug.WriteLine($"lwidth: {lwidth}, rwidth: {rwidth}, totW: {totW}");
 			if (totW > mWidth )
 				mWidth = totW;	
 		}
